@@ -7,6 +7,7 @@ Friday Project
       the list of items by category. For example, `?category=food`
       would only display items with the food category
   * `create-item.html` - create a new inventory item (name and category)
+    * STRETCH: have user confirm the new item look correct before putting it in local storage
   * `item-detail.html` - display the items details (name, category, and quantity)
     * have a button to decrease the quantity
     * have a button to increase the quantity

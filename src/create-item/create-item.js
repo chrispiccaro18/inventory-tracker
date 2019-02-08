@@ -8,7 +8,7 @@ const itemNameP = document.createElement('p');
 itemNameP.textContent = 'Item Name: ';
 const nameInputElement = document.createElement('input');
 nameInputElement.type = 'text';
-nameInputElement.name = 'item-name';
+nameInputElement.name = 'itemName';
 
 // append item name input to p
 itemNameP.appendChild(nameInputElement);
@@ -20,7 +20,7 @@ formElement.appendChild(itemNameP);
 const categoryP = document.createElement('p');
 categoryP.textContent = 'Item Category: ';
 const categorySelectElement = document.createElement('select');
-categorySelectElement.name = 'item-category';
+categorySelectElement.name = 'itemCategory';
 
 // create category options
 // append options to category select
@@ -48,11 +48,28 @@ submitButton.addEventListener('click', function(event) {
     //prevent reloading page
     event.preventDefault();
 
+    const identificationNumber = Date.now();
+    const dateCreated = Date();
     
+    const newItem = {
+        name: formElement.itemName.value,
+        category: formElement.itemCategory.value,
+        dateCreated: dateCreated,
+        id: identificationNumber
+    };
 
-    // const newItem {
-    //     name: 
-    // };
+    
+    let inventoryArray = [];
+    const jsonArray = window.localStorage.getItem('inventory');
+    if(jsonArray) {
+        inventoryArray = JSON.parse(jsonArray);        
+    }
+    inventoryArray.push(newItem);
+    
+    const stringInventoryArray = JSON.stringify(inventoryArray);
+    window.localStorage.setItem('inventory', stringInventoryArray);
+    
+    window.location = 'confirm.html';
 });
 
 // append button to p
