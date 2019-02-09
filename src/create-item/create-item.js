@@ -9,7 +9,6 @@ itemNameP.textContent = 'Item Name: ';
 const nameInputElement = document.createElement('input');
 nameInputElement.type = 'text';
 nameInputElement.name = 'itemName';
-// *** required not working ***
 nameInputElement.required = 'required';
 
 // append item name input to p
@@ -43,15 +42,14 @@ formElement.appendChild(categoryP);
 // create p and item amount input
 const itemAmountP = document.createElement('p');
 itemAmountP.textContent = 'Amount: ';
-const amountInput = document.createElement('input');
-amountInput.type = 'text';
-amountInput.value = 1;
-amountInput.name = 'itemAmount';
-// *** required not working ***
-nameInputElement.required = 'required';
+const amountInputElement = document.createElement('input');
+amountInputElement.type = 'text';
+amountInputElement.value = 1;
+amountInputElement.name = 'itemAmount';
+amountInputElement.required = 'required';
 
 // append item name input to p
-itemAmountP.appendChild(amountInput);
+itemAmountP.appendChild(amountInputElement);
 
 // append p to form
 formElement.appendChild(itemAmountP);
@@ -61,8 +59,15 @@ const submitP = document.createElement('p');
 const submitButton = document.createElement('input');
 submitButton.type = 'submit';
 submitButton.value = 'Create';
+
+// append button to p
+submitP.appendChild(submitButton);
+
+// append p to form
+formElement.appendChild(submitP);
+
 // event listener
-submitButton.addEventListener('click', function(event) {
+formElement.addEventListener('submit', function(event) {
     //prevent reloading page
     event.preventDefault();
 
@@ -86,24 +91,16 @@ submitButton.addEventListener('click', function(event) {
         id: identificationNumber
     };
 
-    let inventoryArray = [];
-    const jsonArray = window.localStorage.getItem('inventory');
+    const jsonArray = window.sessionStorage.getItem('newItem');
     if(jsonArray) {
-        inventoryArray = JSON.parse(jsonArray);        
+        window.sessionStorage.removeItem('newItem');
     }
-    inventoryArray.push(newItem);
     
-    const stringInventoryArray = JSON.stringify(inventoryArray);
+    const stringInventoryArray = JSON.stringify(newItem);
     window.localStorage.setItem('inventory', stringInventoryArray);
     
     window.location = 'confirm.html';
 });
-
-// append button to p
-submitP.appendChild(submitButton);
-
-// append p to form
-formElement.appendChild(submitP);
 
 // append form into section
 formSection.appendChild(formElement);

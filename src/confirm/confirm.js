@@ -18,3 +18,15 @@ if(jsonArray) {
     errorMessageP.textContent = 'Ooops, looks like it didn\'t make it';
     header.appendChild(errorMessageP);
 }
+
+// CONFIRM: save to localstorage and clear session storage
+// let inventoryArray = [];
+// const jsonArray = window.localStorage.getItem('inventory');
+// if(jsonArray) {
+//     inventoryArray = JSON.parse(jsonArray);        
+// }
+// inventoryArray.push(newItem);
+// const stringInventoryArray = JSON.stringify(inventoryArray);
+// window.localStorage.setItem('inventory', stringInventoryArray);
+
+// GO BACK: use session storage to repopulate create-item page
