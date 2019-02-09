@@ -47,26 +47,52 @@ amountInputElement.type = 'text';
 amountInputElement.value = 1;
 amountInputElement.name = 'itemAmount';
 amountInputElement.required = 'required';
-
 // append item name input to p
 itemAmountP.appendChild(amountInputElement);
-
 // append p to form
 formElement.appendChild(itemAmountP);
+
+// create pmsg
+const uniqueMessageP = document.createElement('p');
+uniqueMessageP.textContent = 'Is this item unique?';
+// append pmsg to form
+formElement.appendChild(uniqueMessageP);
+// create p, labels, and unique radios
+const uniqueP = document.createElement('p');
+const uniqueRadioYes = document.createElement('input');
+uniqueRadioYes.type = 'radio';
+uniqueRadioYes.name = 'unique';
+uniqueRadioYes.value = 'yes';
+const labelForYes = document.createElement('label');
+labelForYes.for = 'yes';
+labelForYes.textContent = ' Yes ';
+const uniqueRadioNo = document.createElement('input');
+uniqueRadioNo.type = 'radio';
+uniqueRadioNo.name = 'unique';
+uniqueRadioNo.value = 'no';
+uniqueRadioNo.checked = 'checked';
+const labelForNo = document.createElement('label');
+labelForNo.for = 'no';
+labelForNo.textContent = ' No';
+// append labels and radios to p
+uniqueP.appendChild(uniqueRadioYes);
+uniqueP.appendChild(labelForYes);
+uniqueP.appendChild(uniqueRadioNo);
+uniqueP.appendChild(labelForNo);
+// append p to form
+formElement.appendChild(uniqueP);
 
 // create p and submit button
 const submitP = document.createElement('p');
 const submitButton = document.createElement('input');
 submitButton.type = 'submit';
 submitButton.value = 'Create';
-
 // append button to p
 submitP.appendChild(submitButton);
-
 // append p to form
 formElement.appendChild(submitP);
 
-// event listener
+// event listener on form
 formElement.addEventListener('submit', function(event) {
     //prevent reloading page
     event.preventDefault();
@@ -86,18 +112,18 @@ formElement.addEventListener('submit', function(event) {
         category: formElement.itemCategory.value,
         amount: formElement.itemAmount.value,
         dateCreated: dateCreated,
-        // add unique key/vale
+        unique: formElement.unique.value,
         // *** make sure to keep id as last key/value pair ***
         id: identificationNumber
     };
 
-    const jsonArray = window.sessionStorage.getItem('newItem');
-    if(jsonArray) {
+    const jsonObject = window.sessionStorage.getItem('newItem');
+    if(jsonObject) {
         window.sessionStorage.removeItem('newItem');
     }
     
-    const stringInventoryArray = JSON.stringify(newItem);
-    window.localStorage.setItem('inventory', stringInventoryArray);
+    const stringNewItem = JSON.stringify(newItem);
+    window.sessionStorage.setItem('newItem', stringNewItem);
     
     window.location = 'confirm.html';
 });
