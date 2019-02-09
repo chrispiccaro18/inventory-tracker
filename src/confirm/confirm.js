@@ -7,7 +7,11 @@ if(jsonArray) {
     const lastIndex = inventoryArray.length - 1;
     
     const addMessage = document.createElement('p');
-    addMessage.textContent = `${inventoryArray[lastIndex].name} added to inventory.`;
+    if(inventoryArray[lastIndex].amount > 1) {
+        addMessage.textContent = `${inventoryArray[lastIndex].name} x ${inventoryArray[lastIndex].amount} added to inventory.`;
+    } else {        
+        addMessage.textContent = `${inventoryArray[lastIndex].name} added to inventory.`;
+    }
     header.appendChild(addMessage);
 } else {
     const errorMessageP = document.createElement('p');

@@ -9,6 +9,8 @@ itemNameP.textContent = 'Item Name: ';
 const nameInputElement = document.createElement('input');
 nameInputElement.type = 'text';
 nameInputElement.name = 'itemName';
+// *** required not working ***
+nameInputElement.required = 'required';
 
 // append item name input to p
 itemNameP.appendChild(nameInputElement);
@@ -38,6 +40,22 @@ categoryP.appendChild(categorySelectElement);
 // append p to form
 formElement.appendChild(categoryP);
 
+// create p and item amount input
+const itemAmountP = document.createElement('p');
+itemAmountP.textContent = 'Amount: ';
+const amountInput = document.createElement('input');
+amountInput.type = 'text';
+amountInput.value = 1;
+amountInput.name = 'itemAmount';
+// *** required not working ***
+nameInputElement.required = 'required';
+
+// append item name input to p
+itemAmountP.appendChild(amountInput);
+
+// append p to form
+formElement.appendChild(itemAmountP);
+
 // create p and submit button
 const submitP = document.createElement('p');
 const submitButton = document.createElement('input');
@@ -48,17 +66,26 @@ submitButton.addEventListener('click', function(event) {
     //prevent reloading page
     event.preventDefault();
 
+    if(isNaN(formElement.itemAmount.value)) {
+        const notANumberP = document.createElement('p');
+        notANumberP.textContent = 'Amount must be a valid number.';
+        formSection.appendChild(notANumberP);
+        return;
+    }
+
     const identificationNumber = Date.now();
     const dateCreated = Date();
     
     const newItem = {
         name: formElement.itemName.value,
         category: formElement.itemCategory.value,
+        amount: formElement.itemAmount.value,
         dateCreated: dateCreated,
+        // add unique key/vale
+        // *** make sure to keep id as last key/value pair ***
         id: identificationNumber
     };
 
-    
     let inventoryArray = [];
     const jsonArray = window.localStorage.getItem('inventory');
     if(jsonArray) {
