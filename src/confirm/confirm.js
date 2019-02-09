@@ -6,12 +6,15 @@ if(jsonObject) {
     const newItem = JSON.parse(jsonObject);
 
     let unique = '';
-    if(newItem.unique === 'yes') {
-        unique = 'is';
+    if(newItem.amount > 1) {
+        unique = 'are';
     } else {
-        unique = 'is not';
+        unique = 'is';
     }
-    confirmMessageP.textContent = `Please confirm you would like to add ${newItem.amount} ${newItem.name} that ${unique} unique.`;
+    if(newItem.unique === 'no') {
+        unique += ' not';
+    }
+    confirmMessageP.textContent = `Please confirm you would like to add ${newItem.name} x ${newItem.amount} that ${unique} unique.`;
     confirmSection.appendChild(confirmMessageP);
 
     // CONFIRM: save to localstorage and clear session storage
@@ -29,6 +32,8 @@ if(jsonObject) {
         window.localStorage.setItem('inventory', stringInventoryArray);
 
         window.sessionStorage.removeItem('newItem');
+
+        window.location = 'index.html';
     });
     
     // GO BACK: use session storage to repopulate create-item page

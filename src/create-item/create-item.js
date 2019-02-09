@@ -1,3 +1,4 @@
+const messageSection = document.getElementById('message');
 const formSection = document.getElementById('form-section');
 
 // create form
@@ -92,6 +93,18 @@ submitP.appendChild(submitButton);
 // append p to form
 formElement.appendChild(submitP);
 
+// check for item to edit and replace the form values
+const editItemString = window.sessionStorage.getItem('newItem');
+if(editItemString) {
+    const editItem = JSON.parse(editItemString);
+    formElement.itemName.value = editItem.name;
+    formElement.itemCategory.value = editItem.category;
+    formElement.itemAmount.value = editItem.amount;
+    formElement.unique.value = editItem.unique;
+
+    messageSection.textContent = 'Please edit your item:';
+}
+
 // event listener on form
 formElement.addEventListener('submit', function(event) {
     //prevent reloading page
@@ -111,8 +124,8 @@ formElement.addEventListener('submit', function(event) {
         name: formElement.itemName.value,
         category: formElement.itemCategory.value,
         amount: formElement.itemAmount.value,
-        dateCreated: dateCreated,
         unique: formElement.unique.value,
+        dateCreated: dateCreated,
         // *** make sure to keep id as last key/value pair ***
         id: identificationNumber
     };
