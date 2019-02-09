@@ -38,6 +38,8 @@ function createTable(section, array) {
     tableElement.appendChild(tableBodyElement);
 
     section.appendChild(tableElement);
+
+    return tableElement;
 }
 
 export default createTable;
