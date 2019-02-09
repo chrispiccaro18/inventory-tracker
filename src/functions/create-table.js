@@ -28,8 +28,7 @@ function createTable(section, array) {
     for(let i = 0; i < array.length; i++) {
         const itemRowElement = document.createElement('tr');
         // don't want to list out id
-        for(let j = 0; j < inventoryKeys.length - 1; j++) {
-            // console.log(array[i]);
+        for(let j = 0; j < inventoryKeys.length - 1; j++) {            
             const itemCellElement = document.createElement('td');
             itemCellElement.textContent = array[i][inventoryKeys[j]];
             itemRowElement.appendChild(itemCellElement);

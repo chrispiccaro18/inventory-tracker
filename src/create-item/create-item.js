@@ -110,21 +110,22 @@ formElement.addEventListener('submit', function(event) {
     //prevent reloading page
     event.preventDefault();
 
-    if(isNaN(formElement.itemAmount.value)) {
-        const notANumberP = document.createElement('p');
-        notANumberP.textContent = 'Amount must be a valid number.';
-        formSection.appendChild(notANumberP);
+    if(isNaN(formElement.itemAmount.value) || formElement.itemAmount.value < 1 || !(Number.isInteger(parseFloat(formElement.itemAmount.value)))) {        
+        const invalidNumber = document.createElement('p');
+        invalidNumber.textContent = 'Amount must be an integer greater than 0.';
+        formSection.appendChild(invalidNumber);
         return;
     }
 
     const identificationNumber = Date.now();
-    const dateCreated = Date();
+    const date = new Date();
+    const dateCreated = date.toLocaleDateString('en-US');
     
     const newItem = {
         name: formElement.itemName.value,
         category: formElement.itemCategory.value,
-        amount: formElement.itemAmount.value,
         unique: formElement.unique.value,
+        amount: formElement.itemAmount.value,
         dateCreated: dateCreated,
         // *** make sure to keep id as last key/value pair ***
         id: identificationNumber
