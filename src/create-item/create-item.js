@@ -1,3 +1,4 @@
+const headerText = document.getElementById('header-text');
 const messageSection = document.getElementById('message');
 const formSection = document.getElementById('form-section');
 
@@ -93,9 +94,11 @@ submitP.appendChild(submitButton);
 // append p to form
 formElement.appendChild(submitP);
 
-// check for item to edit and replace the form values
+// check for item to edit, change header, and replace the form values
 const editItemString = window.sessionStorage.getItem('newItem');
 if(editItemString) {
+    headerText.textContent = 'Edit Item';
+
     const editItem = JSON.parse(editItemString);
     formElement.itemName.value = editItem.name;
     formElement.itemCategory.value = editItem.category;
@@ -103,6 +106,8 @@ if(editItemString) {
     formElement.unique.value = editItem.unique;
 
     messageSection.textContent = 'Please edit your item:';
+} else {
+    headerText.textContent = 'Create Item';
 }
 
 // event listener on form

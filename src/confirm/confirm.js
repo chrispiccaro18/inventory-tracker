@@ -22,29 +22,35 @@ if(jsonObject) {
             // check to see if new item is not unique
             if(newItem.unique === 'yes') {
                 inventoryArray.push(newItem);
+                console.log('unique push');
             } else {
                 // check in the array to see if there's an object with the same name
                 // check to see if they are the same category too
+                let addItem = true;
                 for(let i = 0; i < inventoryArray.length; i++) {
                     const newItemName = newItem.name.toLowerCase();
                     const arrayItemName = inventoryArray[i].name.toLowerCase();
                     const newItemCategory = newItem.category;
                     const arrayItemCategory = inventoryArray[i].category;
                     // if so, only update the object in the array's amount
-                    if(newItemName === arrayItemName && newItemCategory === arrayItemCategory) {
-                        console.log('array', typeof inventoryArray[i].amount, 'new', typeof newItem.amount);                        
+                    if(newItemName === arrayItemName && newItemCategory === arrayItemCategory) {                        
                         let oldItemAmount = parseInt(inventoryArray[i].amount, 10);
                         const newItemAmount = parseInt(newItem.amount, 10);
                         const updatedItemAmount = oldItemAmount + newItemAmount;
                         inventoryArray[i].amount = updatedItemAmount;
-                    } else {
-                        inventoryArray.push(newItem);
+                        addItem = false;
+                        console.log('only update amount');
                     }
+                }
+                if(addItem) {
+                    inventoryArray.push(newItem);
+                    console.log('new item, not first push');
                 }
             }        
         } else {
             // first item
             inventoryArray.push(newItem);
+            console.log('first push');
         }
 
         const stringInventoryArray = JSON.stringify(inventoryArray);
@@ -52,7 +58,7 @@ if(jsonObject) {
 
         window.sessionStorage.removeItem('newItem');
 
-        window.location = 'index.html';
+        // window.location = 'index.html';
     });
     
     // EDIT: use session storage to repopulate create-item page
