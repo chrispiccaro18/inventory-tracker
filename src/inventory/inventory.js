@@ -8,9 +8,19 @@ const jsonArray = window.localStorage.getItem('inventory');
 if(jsonArray) {
     inventoryArray = JSON.parse(jsonArray);
 
+    
     let completeInventoryTable = createTable(tableSection, inventoryArray);
+    
+    // TODO create array for all keys
+    // for each key i want an array with all values matching that key
+    const keysArray = Object.keys(inventoryArray[0]);
+    for(let i = 0; i < keysArray.length; i++) {
+        for(let j = 0; j < inventoryArray.length; j++) {
+            console.log([inventoryArray[i][keysArray[j]]]);
+        }
+    }
 
-    // initiate array with first item's category
+    // initiate category array with first item's category
     const categoryArray = [inventoryArray[0].category];
     for(let i = 0; i < inventoryArray.length; i++) {
         const category = inventoryArray[i].category;                    
@@ -22,11 +32,15 @@ if(jsonArray) {
             categoryArray.push(category);
         }
     }
+
+    // grab search parameters
     const searchParams = new URLSearchParams(window.location.search);
     const search = searchParams.get('filter');
     if(search !== null) {
+        // remove complete table
         completeInventoryTable.remove();
 
+        // create array of key/value pair
         const toFindArray = searchParams.get('filter').split(' ');
         
         // create new item array using toFindArray
@@ -36,10 +50,12 @@ if(jsonArray) {
             if(inventoryArray[i][toFindArray[0]] === toFindArray[1]) {
                 filteredInventoryArray.push(inventoryArray[i]);
             }
-        }    
+        }
+        // create new table based on filter parameters    
         createTable(tableSection, filteredInventoryArray);
     }
     
+    // create the filter p
     const filterP = document.createElement('p');
     filterP.textContent = 'Filter by: ';
     const filterSelect = document.createElement('select');
@@ -50,7 +66,8 @@ if(jsonArray) {
     emptyFilterOption.value = '';
     emptyFilterOption.textContent = 'choose an option';
     filterSelect.appendChild(emptyFilterOption);
-            
+    
+    // populate the select options with keys (except id)
     const objectKeys = Object.keys(inventoryArray[0]);
     for(let i = 0; i < objectKeys.length - 1; i++) {
         const filterOption = document.createElement('option');
@@ -58,7 +75,8 @@ if(jsonArray) {
         filterOption.textContent = objectKeys[i];
         filterSelect.appendChild(filterOption);
     }
-
+    // TODO add event listener to each select button
+    // creates another select option based on the values of the inventory array
     filterSelect.addEventListener('change', function() {
         switch(filterSelect.value) {
             case 'category': {
@@ -91,6 +109,7 @@ if(jsonArray) {
         }
     });
 
+    // reset button to populate the table with the complete inventory array
     if(window.location.search !== '') {        
         const resetFilterButton = document.createElement('button');
         resetFilterButton.textContent = 'Reset';
