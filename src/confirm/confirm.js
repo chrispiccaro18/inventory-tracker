@@ -21,8 +21,7 @@ if(jsonObject) {
             inventoryArray = JSON.parse(jsonArray);
             // check to see if new item is not unique
             if(newItem.unique === 'yes') {
-                inventoryArray.push(newItem);
-                console.log('unique push');
+                inventoryArray.push(newItem);                
             } else {
                 // check in the array to see if there's an object with the same name
                 // check to see if they are the same category too
@@ -38,19 +37,16 @@ if(jsonObject) {
                         const newItemAmount = parseInt(newItem.amount, 10);
                         const updatedItemAmount = oldItemAmount + newItemAmount;
                         inventoryArray[i].amount = updatedItemAmount;
-                        addItem = false;
-                        console.log('only update amount');
+                        addItem = false;                        
                     }
                 }
                 if(addItem) {
-                    inventoryArray.push(newItem);
-                    console.log('new item, not first push');
+                    inventoryArray.push(newItem);                    
                 }
             }        
         } else {
             // first item
-            inventoryArray.push(newItem);
-            console.log('first push');
+            inventoryArray.push(newItem);            
         }
 
         const stringInventoryArray = JSON.stringify(inventoryArray);
