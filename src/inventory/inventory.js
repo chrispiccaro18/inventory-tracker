@@ -14,11 +14,26 @@ if(jsonArray) {
     // TODO create array for all keys
     // for each key i want an array with all values matching that key
     const keysArray = Object.keys(inventoryArray[0]);
-    for(let i = 0; i < keysArray.length; i++) {
-        for(let j = 0; j < inventoryArray.length; j++) {
-            console.log([inventoryArray[i][keysArray[j]]]);
-        }
+    const filterArray = inventoryArray.filter(item => item === keysArray[0]);
+    // console.log(filterArray);
+
+    const mapArray = inventoryArray.map(name => name === keysArray[0]);
+    // console.log(mapArray);
+
+    const nameArray = [];
+    for(let i = 0; i < inventoryArray.length; i++) {
+        nameArray[i] = inventoryArray[i][keysArray[0]];
     }
+    // console.log(nameArray);
+    let valuesArray = [];
+    for(let i = 0; i < keysArray.length; i++) {
+        const valueArray = [];
+        for(let j = 0; j < inventoryArray.length; j++) {
+            valueArray[j] = inventoryArray[j][keysArray[i]];
+        }
+        valuesArray = valueArray[i];
+    }
+    console.log(valuesArray);
 
     // initiate category array with first item's category
     const categoryArray = [inventoryArray[0].category];
