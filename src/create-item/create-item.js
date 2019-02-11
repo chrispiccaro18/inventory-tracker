@@ -125,12 +125,13 @@ formElement.addEventListener('submit', function(event) {
     const identificationNumber = Date.now();
     const date = new Date();
     const dateCreated = date.toLocaleDateString('en-US');
+    const amountParsed = parseInt(formElement.itemAmount.value, 10);
     
     const newItem = {
         name: formElement.itemName.value,
         category: formElement.itemCategory.value,
         unique: formElement.unique.value,
-        amount: formElement.itemAmount.value,
+        amount: amountParsed,
         dateCreated: dateCreated,
         // *** make sure to keep id as last key/value pair ***
         id: identificationNumber

@@ -54,7 +54,7 @@ if(jsonObject) {
 
         window.sessionStorage.removeItem('newItem');
 
-        // window.location = 'index.html';
+        window.location = 'index.html';
     });
     
     // EDIT: use session storage to repopulate create-item page

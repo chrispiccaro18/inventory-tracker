@@ -8,35 +8,38 @@ const jsonArray = window.localStorage.getItem('inventory');
 if(jsonArray) {
     inventoryArray = JSON.parse(jsonArray);
 
-    
     let completeInventoryTable = createTable(tableSection, inventoryArray);
     
     // TODO create array for all keys
     // for each key i want an array with all values matching that key
-    const keysArray = Object.keys(inventoryArray[0]);
-    const filterArray = inventoryArray.filter(item => item === keysArray[0]);
-    // console.log(filterArray);
-
-    const mapArray = inventoryArray.map(name => name === keysArray[0]);
-    // console.log(mapArray);
-
-    const nameArray = [];
+    // this doesn't quite work
+    const keys = [];
+    const values = [];
     for(let i = 0; i < inventoryArray.length; i++) {
-        nameArray[i] = inventoryArray[i][keysArray[0]];
+        keys[i] = Object.keys(inventoryArray[i]); 
+        
     }
-    // console.log(nameArray);
-    let valuesArray = [];
-    for(let i = 0; i < keysArray.length; i++) {
-        const valueArray = [];
-        for(let j = 0; j < inventoryArray.length; j++) {
-            valueArray[j] = inventoryArray[j][keysArray[i]];
+    for(let i = 0; i < keys[0].length; i++) {
+        const value = [];
+        for(let j = 0; j < inventoryArray.length; j++) { 
+            if(value.length !== 0) {
+                const valueToAdd = inventoryArray[j][keys[j][i]];
+                let emptyCount = 0;
+                for(let k = 0; k < value.length; k++) {
+                    if(valueToAdd === value[k]) {     
+                        emptyCount++;                                           
+                        break;
+                    }
+                    value[j - emptyCount] = valueToAdd;
+                }
+            } else {                
+                value[j] = inventoryArray[j][keys[j][i]];
+            }   
         }
-        valuesArray = valueArray[i];
+        values[i] = value;
     }
-    console.log(valuesArray);
-
-    // initiate category array with first item's category
-    const categoryArray = [inventoryArray[0].category];
+    
+    const categoryArray = [inventoryArray[0]];
     for(let i = 0; i < inventoryArray.length; i++) {
         const category = inventoryArray[i].category;                    
         for(let j = 0; j < categoryArray.length; j++) {
@@ -44,10 +47,11 @@ if(jsonArray) {
             if(category === categoryArray[j]) {
                 break;
             }
-            categoryArray.push(category);
+            categoryArray[i] = category;
         }
     }
-
+    console.log(categoryArray);
+    // console.log(categoryArray);
     // grab search parameters
     const searchParams = new URLSearchParams(window.location.search);
     const search = searchParams.get('filter');
